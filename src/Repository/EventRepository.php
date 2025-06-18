@@ -16,6 +16,27 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    public function findAvailable(
+        ?array $orderBy = [
+            'date' => 'ASC',
+            'name' => 'ASC',
+        ],
+        ?int $limit = null,
+        ?int $offset = null
+    ): array
+    {
+        $query = $this->createQueryBuilder('e')
+            ->andWhere('e.available_spots > 0')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
+
+        foreach ($orderBy as $field => $order) {
+            $query->addOrderBy("e.{$field}", $order);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Event[] Returns an array of Event objects
     //     */
