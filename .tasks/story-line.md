@@ -24,9 +24,9 @@
 
 ---
 
-Groom
+### Groom
 
-BE
+#### BE
 
 - Init new symphony + MySQL project
 - Define Event model with name: string, date: date, location: string, available_spots: int, timestamps
@@ -39,7 +39,7 @@ BE
     - unique constraints should only be in the context of API & not in DB.
 - 200, 422 codes
 
-FE
+#### FE
 
 Init new repo
 Define axios client with few endpoints:
