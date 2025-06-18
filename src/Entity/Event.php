@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -14,21 +15,27 @@ class Event
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["event:index", "event:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["event:index", "event:read"])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(["event:index", "event:read"])]
     private ?\DateTime $date = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["event:index", "event:read"])]
     private ?string $location = null;
 
     #[ORM\Column]
+    #[Groups(["event:index", "event:read"])]
     private ?int $available_spots = null;
 
     #[ORM\Column]
+    #[Groups(["event:index", "event:read"])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
