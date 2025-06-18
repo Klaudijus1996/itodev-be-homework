@@ -1,0 +1,7 @@
+- Transactional API middleware so make sure that in case of error, the database is not left in an inconsistent state.
+- DB lock on registration or at least unique constraint on event_registration_event_id_email at the database level to prevent double registrations.
+- API documentation. Attempted to do something using `api-platform` libraries, but takes some time.
+- Ez sorting and filtering by query params on the API endpoints.
+- `AvailableEventsController` may be more suited as is required by the task definition, but I would like it to be just a simple filter passed by url instead.
+- Add a test env setup to make file or figure out how to define testing env & create a test db properly. Had some failed attempts at it.
+- Tests, at least feature based tests for the API & it's surroundings like error handling & transactions.
