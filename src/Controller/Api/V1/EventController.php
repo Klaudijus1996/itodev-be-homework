@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Api\V1;
 
+use App\Dto\EventResponseDto;
 use App\Dto\RegisterEventRequest;
 use App\Entity\Event;
 use App\Entity\EventRegistration;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
+// TODO: Api documentation
 #[Route('/api/v1/events', name: 'api_events_')]
 class EventController extends AbstractController
 {
@@ -40,8 +42,15 @@ class EventController extends AbstractController
             ->getRepository(Event::class)
             ->findAvailable(limit: $limit, offset: ($page - 1) * $limit);
 
+        $data = EventResponseDto::fromCollection($events);
+
         return $this->json([
-            'data' => $events
+            'items' => $data,
+            'meta' => [
+                'page' => $page,
+                'limit' => $limit,
+                'total' => $this->em->getRepository(Event::class)->countAvailable(),
+            ],
         ], 200, [], ['groups' => ['event:index']]);
     }
 
@@ -80,9 +89,8 @@ class EventController extends AbstractController
         $this->em->persist($registration);
         $this->em->flush();
 
-        return $this->json([
-            'registration_id'  => $registration->getId(),
-            'remaining_spots'  => $event->getAvailableSpots(),
-        ], 201);
+        $data = new EventResponseDto($event);
+
+        return $this->json($data, 201);
     }
 }

@@ -37,6 +37,15 @@ class EventRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    public function countAvailable(): int
+    {
+        return (int) $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->andWhere('e.available_spots > 0')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     //    /**
     //     * @return Event[] Returns an array of Event objects
     //     */
