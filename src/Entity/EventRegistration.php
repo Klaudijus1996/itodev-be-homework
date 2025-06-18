@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Id\ShortflakeIdGenerator;
 use App\Repository\EventRegistrationRepository;
 use DateTime;
 use DateTimeImmutable;
@@ -12,8 +13,9 @@ use Gedmo\Mapping\Annotation\Timestampable;
 class EventRegistration
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'bigint', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue('CUSTOM')]
+    #[ORM\CustomIdGenerator(class: ShortflakeIdGenerator::class)]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'registrations')]

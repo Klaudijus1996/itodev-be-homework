@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Id\ShortflakeIdGenerator;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,8 +15,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Event
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'bigint', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue('CUSTOM')]
+    #[ORM\CustomIdGenerator(class: ShortflakeIdGenerator::class)]
     #[Groups(["event:index", "event:read"])]
     private ?int $id = null;
 

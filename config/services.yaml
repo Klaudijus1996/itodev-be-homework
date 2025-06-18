@@ -21,6 +21,8 @@ services:
                 event: kernel.exception,
                 method: onKernelException,
                 priority: 10 }
+    App\Doctrine\Id\ShortflakeIdGenerator:
+        tags: [ 'doctrine.id_generator' ]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
