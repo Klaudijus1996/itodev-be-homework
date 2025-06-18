@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\EventRegistrationRepository;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Timestampable;
 
 #[ORM\Entity(repositoryClass: EventRegistrationRepository::class)]
 class EventRegistration
@@ -24,10 +27,12 @@ class EventRegistration
     private ?string $email = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    #[Timestampable(on: 'create')]
+    private ?DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
-    private ?\DateTime $updated_at = null;
+    #[Timestampable(on: 'update')]
+    private ?DateTime $updated_at = null;
 
     public function getId(): ?int
     {
@@ -70,24 +75,24 @@ class EventRegistration
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): static
+    public function setUpdatedAt(DateTime $updated_at): static
     {
         $this->updated_at = $updated_at;
 

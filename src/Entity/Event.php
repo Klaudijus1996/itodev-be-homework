@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Timestampable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
@@ -35,10 +36,12 @@ class Event
     private ?int $available_spots = null;
 
     #[ORM\Column]
+    #[Timestampable(on: 'create')]
     #[Groups(["event:index", "event:read"])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
+    #[Timestampable(on: 'update')]
     private ?\DateTime $updated_at = null;
 
     /**
