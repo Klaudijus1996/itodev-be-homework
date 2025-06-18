@@ -21,6 +21,12 @@ services:
                 event: kernel.exception,
                 method: onKernelException,
                 priority: 10 }
+    App\EventListener\ApiExceptionListener:
+        tags:
+            - { name: kernel.event_listener,
+                event: kernel.exception,
+                method: onKernelException,
+                priority: 20 }
     App\Doctrine\Id\ShortflakeIdGenerator:
         tags: [ 'doctrine.id_generator' ]
 

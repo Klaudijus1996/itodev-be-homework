@@ -53,11 +53,11 @@ class EventController extends AbstractController
         // TODO: findOrFail method
         $event = $this->em->getRepository(Event::class)->find($id);
         if (!$event) {
-            return $this->json(['error' => 'Event not found.'], 404);
+            return $this->json(['message' => 'Event not found.'], 404);
         }
 
         if ($event->getAvailableSpots() <= 0) {
-            return $this->json(['error' => 'No spots available.'], 409);
+            return $this->json(['message' => 'No spots available.'], 409);
         }
 
         // 2) Check unique registration per email & event
@@ -66,7 +66,7 @@ class EventController extends AbstractController
             ->findOneBy(['event' => $event, 'email' => $data->getEmail()]);
 
         if ($already) {
-            return $this->json(['error' => 'You are already registered.'], 409);
+            return $this->json(['message' => 'You are already registered.'], 409);
         }
 
         $registration = new EventRegistration;
