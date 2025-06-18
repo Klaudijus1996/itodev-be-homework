@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Api\V1;
 
+use App\Dto\EventRegistrationResponseDto;
 use App\Dto\EventResponseDto;
 use App\Dto\RegisterEventRequest;
 use App\Entity\Event;
@@ -89,7 +90,7 @@ class EventController extends AbstractController
         $this->em->persist($registration);
         $this->em->flush();
 
-        $data = new EventResponseDto($event);
+        $data = EventRegistrationResponseDto::make($registration);
 
         return $this->json($data, 201);
     }
