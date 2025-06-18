@@ -17,12 +17,10 @@ class EventRepository extends ServiceEntityRepository
     }
 
     public function findAvailable(
-        ?array $orderBy = [
-            'date' => 'ASC',
-            'name' => 'ASC',
-        ],
+        ?array $orderBy = null,
         ?int $limit = null,
-        ?int $offset = null
+        ?int $offset = null,
+        ?string $search = null
     ): array
     {
         $query = $this->createQueryBuilder('e')
@@ -30,7 +28,29 @@ class EventRepository extends ServiceEntityRepository
             ->setMaxResults($limit)
             ->setFirstResult($offset);
 
+        if (!empty($search)) {
+            $query
+                ->andWhere('e.name LIKE :search OR e.date LIKE :search OR e.location LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        if (empty($orderBy)) {
+            $orderBy = [
+                'date' => 'ASC',
+                'name' => 'ASC',
+            ];
+        }
+
         foreach ($orderBy as $field => $order) {
+            if (!in_array($field, [
+                'date',
+                'name',
+                'location',
+                'created_at',
+            ])) {
+                continue;
+            }
+
             $query->addOrderBy("e.{$field}", $order);
         }
 

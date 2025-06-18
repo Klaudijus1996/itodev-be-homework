@@ -32,7 +32,9 @@ class ApiExceptionListener
             return;
         }
 
-        $statusCode = $exception->getStatusCode();
+        $statusCode = method_exists($exception, 'getStatusCode')
+            ? $exception->getStatusCode()
+            : 500;
 
         // 4) Choose message (and trace) based on environment
         if ('prod' === $this->kernel->getEnvironment()) {
@@ -50,7 +52,10 @@ class ApiExceptionListener
         $response = new JsonResponse($payload, $statusCode);
 
         // 5) Preserve any headers the exception might carry
-        foreach ($exception->getHeaders() as $header => $values) {
+        $headers = method_exists($exception, 'getHeaders')
+            ? $exception->getHeaders()
+            : [];
+        foreach ($headers as $header => $values) {
             foreach ($values as $value) {
                 $response->headers->set($header, $value, false);
             }

@@ -37,11 +37,34 @@ class EventController extends AbstractController
         if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
             $limit = (int)$_GET['limit'];
         }
+        $orderBy = [];
+        if (!empty($_GET['sorts']) && is_array($_GET['sorts'])) {
+            foreach ($_GET['sorts'] as $sort) {
+                $desc = $sort['desc'];
+                switch (true) {
+                    case is_string($desc):
+                        $desc = strtolower($desc) === 'true';
+                        break;
+                    case is_bool($desc):
+                        break;
+                    case is_null($desc):
+                        $desc = false;
+                        break;
+                    case is_numeric($desc):
+                        $desc = (bool)$desc;
+                        break;
+                    default:
+                        $desc = false;
+                }
+
+                $orderBy[$sort['id']] = $desc ? 'DESC' : 'ASC';
+            }
+        }
 
         $events = $this
             ->em
             ->getRepository(Event::class)
-            ->findAvailable(limit: $limit, offset: ($page - 1) * $limit);
+            ->findAvailable($orderBy, limit: $limit, offset: ($page - 1) * $limit, search: $_GET['search'] ?? null);
 
         $data = EventResponseDto::fromCollection($events);
 
