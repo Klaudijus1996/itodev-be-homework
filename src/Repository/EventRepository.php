@@ -46,6 +46,7 @@ class EventRepository extends ServiceEntityRepository
                 'date',
                 'name',
                 'location',
+                'available_spots',
                 'created_at',
             ])) {
                 continue;
