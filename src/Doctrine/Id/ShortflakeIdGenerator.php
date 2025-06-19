@@ -14,7 +14,7 @@ class ShortflakeIdGenerator extends AbstractIdGenerator
     private int $lastTimestamp = -1;
     private int $sequence = 0;
 
-    public function generateId(EntityManagerInterface $em, $entity): mixed
+    public function generateId(EntityManagerInterface $em, object|null $entity): mixed
     {
         $ts = $this->currentTime();
 

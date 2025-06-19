@@ -42,6 +42,9 @@ test: ## Start tests with phpunit, pass the parameter "c=" to add options to php
 	@$(eval c ?=)
 	@$(DOCKER_COMP) exec -e APP_ENV=test php bin/phpunit $(c)
 
+phpstan: ## Run PHPStan analysis (uses vendor/bin/phpstan). Pass p="…" to add flags, e.g. p="--level=7"
+	@$(eval p ?=)
+	@$(PHP) vendor/bin/phpstan analyse --ansi $(p)
 
 ## —— Composer 🧙 ——————————————————————————————————————————————————————————————
 composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'

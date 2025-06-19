@@ -16,6 +16,13 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    /**
+     * @param array<string, string>|null $orderBy
+     * @param int|null $limit
+     * @param int|null $offset
+     * @param string|null $search
+     * @return Event[]
+     */
     public function findAvailable(
         ?array $orderBy = null,
         ?int $limit = null,
