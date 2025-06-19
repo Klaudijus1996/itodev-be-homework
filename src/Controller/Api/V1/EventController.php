@@ -30,11 +30,15 @@ class EventController extends AbstractController
     {
         // TODO: Define a filter which would alter builder by url query params
         $page = 1; // Default page
-        if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+        if (isset($_GET['page'])
+            && is_numeric($_GET['page'])
+            && (int)$_GET['page'] > 0) {
             $page = (int)$_GET['page'];
         }
         $limit = 10; // Default limit
-        if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
+        if (isset($_GET['limit'])
+            && is_numeric($_GET['limit'])
+            && (int)$_GET['limit'] > 0) {
             $limit = (int)$_GET['limit'];
         }
         $orderBy = [];
