@@ -150,6 +150,7 @@ The project includes a Makefile with several useful commands:
 - `make sf c="<command>"`: Run a Symfony command
 - `make cc`: Clear the Symfony cache
 - `make test [c="<options>"]`: Run tests
+- `make phpstan [p="<options>"]`: Run phpstan static analysis
 
 ### Project Structure
 
