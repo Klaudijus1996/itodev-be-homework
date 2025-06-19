@@ -5,3 +5,5 @@
 - `AvailableEventsController` may be more suited as is required by the task definition, but I would like it to be just a simple filter passed by url instead.
 - Add a test env setup to make file or figure out how to define testing env & create a test db properly. Had some failed attempts at it.
 - Tests, at least feature based tests for the API & it's surroundings like error handling & transactions.
+- Static analysis tools
+- Code formatting tools
