@@ -43,22 +43,9 @@ The system ensures that:
 
    This will build and start the necessary containers (PHP with FrankenPHP and MySQL).
 
-3. Install dependencies:
-   ```bash
-   make composer c="install"
-   ```
+   If you're php service fails & shows `cant find docker-entrypoint` error, then run `sed -i 's/\r$//' frankenphp/docker-entrypoint.sh` to remove CR (\r) from the end of every line & try again.
 
-4. Create the database schema:
-   ```bash
-   make sf c="doctrine:migrations:migrate --no-interaction"
-   ```
-
-5. (Optional) Load fixtures to have some initial data:
-   ```bash
-   make sf c="doctrine:fixtures:load --no-interaction"
-   ```
-
-6. The application should now be running at:
+3. The application should now be running at:
    - HTTP: http://localhost:80
    - HTTPS: https://localhost:443
 
